@@ -13,7 +13,10 @@ module.exports = {
     "quotes": ["error", "double"],
     "indent": ["error", 2],
     "comma-dangle": ["error", "never"],
-    "object-curly-spacing": ["error", "always"]
+    "object-curly-spacing": ["error", "always"],
+    "vue/multi-word-component-names": "off",
+    "no-console": "off",
+    "no-debugger": "off"
   },
-  ignorePatterns: [".eslintrc.js", "node_modules", "build", "dist", "public"]
+  ignorePatterns: [".eslintrc.cjs", "node_modules", "build", "dist", "public"]
 };
