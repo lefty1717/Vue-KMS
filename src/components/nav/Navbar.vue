@@ -1,6 +1,6 @@
 
 <template>
-    <div class="card">
+    <div class="card mx-4">
         <Menubar :model="items">
             <template #start>
                 <svg width="35" height="40" viewBox="0 0 35 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-2rem">
@@ -14,18 +14,21 @@
                     />
                 </svg>
             </template>
-            <template #item="{ item, props, hasSubmenu, root }">
-                <a v-ripple class="flex align-items-center" v-bind="props.action">
+            <template #item="{ item, props, hasSubmenu }">
+                <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+                    <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+                        <span :class="item.icon" />
+                        <span class="ml-2">{{ item.label }}</span>
+                    </a>
+                </router-link>
+                <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
                     <span :class="item.icon" />
                     <span class="ml-2">{{ item.label }}</span>
-                    <Badge v-if="item.badge" :class="{ 'ml-auto': !root, 'ml-2': root }" :value="item.badge" />
-                    <span v-if="item.shortcut" class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{{ item.shortcut }}</span>
-                    <i v-if="hasSubmenu" :class="['pi pi-angle-down', { 'pi-angle-down ml-2': root, 'pi-angle-right ml-auto': !root }]"></i>
+                    <span v-if="hasSubmenu" class="pi pi-fw pi-angle-down ml-2" />
                 </a>
             </template>
             <template #end>
                 <div class="flex align-items-center gap-2">
-                    <InputText placeholder="Search" type="text" class="w-8rem sm:w-auto" />
                     <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" />
                 </div>
             </template>
@@ -36,71 +39,70 @@
 <script setup>
 import { ref } from "vue";
 import Menubar from "primevue/menubar";
-import Badge from "primevue/badge";
-import InputText from "primevue/inputtext";
 import Avatar from "primevue/avatar";
+
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const items = ref([
   {
     label: "首頁",
-    icon: "pi pi-home"
+    icon: "pi pi-home",
+    command: () => router.push("/")
   },
   {
-    label: "知識庫",
-    icon: "pi pi-star"
-  },
-  {
-    label: "提問區",
-    icon: "pi pi-star"
-  },
-  {
-    label: "排行榜",
-    icon: "pi pi-star"
-  },
-  {
-    label: "提問區",
-    icon: "pi pi-search",
+    label: "知識管理",
+    icon: "pi pi-server",
     items: [
       {
-        label: "個人資料",
-        icon: "pi pi-bolt",
-        shortcut: "⌘+S"
+        label: "知識庫",
+        icon: "pi pi-book",
+        shortcut: "",
+        route: "/knowledge-base"
       },
       {
-        label: "Blocks",
-        icon: "pi pi-server",
-        shortcut: "⌘+B"
-      },
-      {
-        label: "UI Kit",
-        icon: "pi pi-pencil",
-        shortcut: "⌘+U"
-      },
-      {
-        separator: true
-      },
-      {
-        label: "Templates",
-        icon: "pi pi-palette",
-        items: [
-          {
-            label: "Apollo",
-            icon: "pi pi-palette",
-            badge: 2
-          },
-          {
-            label: "Ultima",
-            icon: "pi pi-palette",
-            badge: 3
-          }
-        ]
+        label: "新增知識",
+        icon: "pi pi-plus",
+        shortcut: "",
+        route: "/create-knowledge"
       }
     ]
   },
   {
-    label: "Contact",
-    icon: "pi pi-envelope",
-    badge: 3
+    label: "提問區",
+    icon: "pi pi-question"
+  },
+  {
+    label: "排行榜",
+    icon: "pi pi-chart-bar",
+    items: [
+      {
+        label: "小組排行榜",
+        icon: "pi pi-users",
+        shortcut: ""
+      },
+      {
+        label: "個人排行榜",
+        icon: "pi pi-user",
+        shortcut: ""
+      }
+    ]
+  },
+  {
+    label: "個人資料",
+    icon: "pi pi-user",
+    items: [
+      {
+        label: "人物頭像",
+        icon: "pi pi-user",
+        shortcut: ""
+      },
+      {
+        label: "個人資料",
+        icon: "pi pi-pen-to-square",
+        shortcut: ""
+      }
+    ]
   }
 ]);
 </script>
