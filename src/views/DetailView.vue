@@ -1,12 +1,14 @@
 <template>
-    <div class="card flex justify-content-center bg-sky-100 m-20 p-2 rounded-lg">
+    <div class="card flex flex-col justify-content-center bg-sky-100 m-10 p-2 h-full rounded-lg">
         <p class="text-4xl text-sky-800">
           {{ knowledgeData.title }}
         </p>
-        <p class="text-2xl">
-          {{ knowledgeData.category }}
-        </p>
-        <p>由 {{ knowledgeData.creator }} 於 {{ knowledgeData.create_time }} 建立</p>
+        <div class="flex flex-row justify-between text-gray-500 m-2">
+          <p class="text-2xl">
+            {{ knowledgeData.category_cn }}
+          </p>
+          <p>由 {{ knowledgeData.creator }} 於 {{ knowledgeData.create_time }} 建立</p>
+        </div>
     </div>
 </template>
 
@@ -14,7 +16,7 @@
 // vue
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-// primevue
+// firebase
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "@/_firebase/firebase_setting";
 // tools

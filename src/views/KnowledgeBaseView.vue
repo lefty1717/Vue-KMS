@@ -1,7 +1,6 @@
 
 <template>
     <div class="card mx-14">
-      <router-view></router-view>
         <DataView :value="knowledgeBaseData" paginator :rows="5">
             <template #list="slotProps">
                 <div class="grid grid-nogutter">
@@ -19,20 +18,12 @@
                                           {{ item.title }}
                                         </div>
                                         <span class="font-medium text-secondary text-sm">
-                                          {{ item.category }}
+                                          {{ item.category_cn }}
                                         </span>
                                     </div>
                                     <div class="">
 
                                     </div>
-                                    <!-- <div class="surface-100 p-1" style="border-radius: 30px">
-                                        <div class="surface-0 flex align-items-center gap-2 justify-content-center" style="border-radius: 30px;">
-                                            <i class="pi pi-eye"></i>
-                                            <span class="text-900 font-medium text-sm">
-                                                觀看次數：{{ item.views }}
-                                            </span>
-                                        </div>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -48,18 +39,20 @@
 <script setup>
 // vue
 import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 // primevue
 import DataView from "primevue/dataview";
 import Button from "primevue/button";
-// import DataViewLayoutOptions from "primevue/dataviewlayoutoptions";   // optional
 // db
 import { db } from "@/_firebase/firebase_setting";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
-
+const route = useRoute();
 const knowledgeBaseData = ref([]);
 const getKnowledgeBaseData = async () => {
-  const querySnapshot = await getDocs(collection(db, "KnowledgeBase"));
+  const q = query(collection(db, "KnowledgeBase"), where("category", "==", route.params.catalogName));
+  const querySnapshot = await getDocs(q);
+    
   const knowledgeBaseData = [];
   querySnapshot.forEach((doc) => {
     const data = {

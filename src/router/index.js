@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import KnowledgeBaseView from "@/views/KnowledgeBaseView.vue";
 import KnowledgeDetailVue from "@/views/DetailView.vue";
+import CatalogView from "@/views/CatalogView.vue";
 // import CreateKnowledgeView from "@/views/CreateKnowledgeView.vue";
 
 const router = createRouter({
@@ -15,8 +16,13 @@ const router = createRouter({
       // component: () => import("../views/HomeView.vue")
     },
     {
-      path: "/knowledge-base",
-      name: "KnowledgeBase",
+      path: "/catalog",
+      name: "Catalog",
+      component: CatalogView
+    },
+    {
+      path: "/catalog/:catalogName",
+      name: "CatalogKnowledge",
       component: KnowledgeBaseView
     },
     {

@@ -4,14 +4,14 @@ import "primeicons/primeicons.css";
 </script>
 
 <template>
-  <div>
+  <div class="h-full">
     <Navbar />
     <router-view />
   </div>
 </template>
 
 <style scoped>
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
   header {
     display: flex;
     place-items: center;
@@ -36,5 +36,5 @@ import "primeicons/primeicons.css";
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
+} */
 </style>

@@ -1,35 +1,3 @@
-<script setup>
-// vue
-import { ref, onMounted } from "vue";
-// primevue
-import Avatar from "primevue/avatar";
-import AvatarGroup from "primevue/avatargroup";   //Optional for grouping
-// db
-import { collection, getDocs, orderBy, limit, query } from "firebase/firestore";
-import { db } from "@/_firebase/firebase_setting";
-
-const getKnowledgeBaseData = async () => {
-  const q = query(collection(db, "KnowledgeBase"), orderBy("create_time", "desc"), limit(5));
-  const querySnapshot = await getDocs(q);
-  const knowledgeBaseData = [];
-  querySnapshot.forEach((doc) => {
-    const data = {
-      id: doc.id,
-      ...doc.data()
-    };
-    knowledgeBaseData.push(data);
-  });
-  return knowledgeBaseData;
-};
-
-const knowledgeBaseData = ref([]);
-onMounted(async () => {
-  await getKnowledgeBaseData().then((data) => {
-    knowledgeBaseData.value = data;
-  });
-  console.log("knowledgeBaseData", knowledgeBaseData.value);
-});
-</script>
 
 <template>
   <div class="bg-blue-100 mx-8 rounded-xl">
@@ -73,3 +41,38 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+
+<script setup>
+// vue
+import { ref, onMounted } from "vue";
+// primevue
+import Avatar from "primevue/avatar";
+import AvatarGroup from "primevue/avatargroup";   //Optional for grouping
+// db
+import { collection, getDocs, orderBy, limit, query } from "firebase/firestore";
+import { db } from "@/_firebase/firebase_setting";
+// tools
+import { fromUnixTime, format } from "date-fns";
+
+const getKnowledgeBaseData = async () => {
+  const q = query(collection(db, "KnowledgeBase"), orderBy("create_time", "desc"), limit(5));
+  const querySnapshot = await getDocs(q);
+  const knowledgeBaseData = [];
+  querySnapshot.forEach((doc) => {
+    const data = {
+      id: doc.id,
+      ...doc.data()
+    };
+    knowledgeBaseData.push(data);
+  });
+  return knowledgeBaseData;
+};
+  
+const knowledgeBaseData = ref([]);
+onMounted(async () => {
+  await getKnowledgeBaseData().then((data) => {
+    knowledgeBaseData.value = data;
+  });
+  console.log("knowledgeBaseData", knowledgeBaseData.value);
+});
+</script>

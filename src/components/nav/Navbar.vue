@@ -58,7 +58,7 @@ const items = ref([
         label: "知識庫",
         icon: "pi pi-book",
         shortcut: "",
-        route: "/knowledge-base"
+        route: "/catalog"
       },
       {
         label: "新增知識",
