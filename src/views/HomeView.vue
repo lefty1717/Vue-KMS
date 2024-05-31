@@ -20,7 +20,7 @@
             class="!items-center justify-content-center"
           >
             <p class="text-lg text-blue-500">{{ item.title }}</p>
-            <p class="text-sm">{{ item.category }}</p>
+            <p class="text-sm">{{ item.category_cn }}</p>
             <p class="text-sm text-slate-500">本文由 {{ item.creator }} 建立</p>
           </a>
         </div>

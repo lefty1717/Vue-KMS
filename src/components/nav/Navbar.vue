@@ -61,7 +61,7 @@ const items = ref([
         route: "/catalog"
       },
       {
-        label: "新增知識",
+        label: "新增文件",
         icon: "pi pi-plus",
         shortcut: "",
         route: "/create-knowledge"

@@ -5,6 +5,7 @@ import { createPinia } from "pinia";
 // primevue
 import PrimeVue from "primevue/config";
 import "primevue/resources/themes/aura-light-green/theme.css";
+import ToastService from "primevue/toastservice";
 // firebase
 import { VueFire, VueFireAuth } from "vuefire";
 import { firebaseApp } from "./_firebase/firebase_setting";
@@ -30,5 +31,7 @@ app.use(VueFire, {
     VueFireAuth()
   ]
 });
+
+app.use(ToastService);
 
 app.mount("#app");

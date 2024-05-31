@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "@/views/HomeView.vue";
+import CreateKnowledgeView from "@/views/CreateKnowledgeView.vue";
 import KnowledgeBaseView from "@/views/KnowledgeBaseView.vue";
 import KnowledgeDetailVue from "@/views/DetailView.vue";
 import CatalogView from "@/views/CatalogView.vue";
@@ -29,6 +30,11 @@ const router = createRouter({
       path: "/knowledge-detail/:id",
       name: "KnowledgeDetail",
       component: KnowledgeDetailVue
+    },
+    {
+      path: "/create-knowledge",
+      name: "CreateKnowledge",
+      component: CreateKnowledgeView
     }
   ]
 });
