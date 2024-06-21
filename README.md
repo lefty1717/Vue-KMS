@@ -1,4 +1,4 @@
-# kk
+# KMS
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -33,3 +33,11 @@ npm run build
 ```sh
 npm run lint
 ```
+
+### 展示
+
+![image](https://github.com/lefty1717/Vue-KMS/assets/84022803/09986ec1-6c0d-4955-9266-42b05d04d306)
+
+![image](https://github.com/lefty1717/Vue-KMS/assets/84022803/4164c138-90cd-4e0d-8131-0d28aa9b19b1)
+
+![image](https://github.com/lefty1717/Vue-KMS/assets/84022803/3e76e329-9b3b-4934-b97a-1498ccd81e69)
