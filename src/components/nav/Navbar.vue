@@ -69,22 +69,25 @@ const items = ref([
     ]
   },
   {
-    label: "提問區",
-    icon: "pi pi-question"
+    label: "討論區",
+    icon: "pi pi-question",
+    route: "/forum"
   },
   {
     label: "排行榜",
     icon: "pi pi-chart-bar",
     items: [
       {
-        label: "小組排行榜",
-        icon: "pi pi-users",
-        shortcut: ""
-      },
-      {
         label: "個人排行榜",
         icon: "pi pi-user",
-        shortcut: ""
+        shortcut: "",
+        route: "/rank/ind"
+      },
+      {
+        label: "小組排行榜",
+        icon: "pi pi-users",
+        shortcut: "",
+        route: "/rank/team"
       }
     ]
   },
@@ -96,6 +99,12 @@ const items = ref([
         label: "人物頭像",
         icon: "pi pi-user",
         shortcut: ""
+      },
+      {
+        label: "成就",
+        icon: "pi pi-trophy",
+        shortcut: "",
+        route: "/profile/achievements"
       },
       {
         label: "個人資料",

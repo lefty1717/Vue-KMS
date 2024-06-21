@@ -1,7 +1,7 @@
 <template>
-    <div class="card bg-sky-100 m-10 p-2 justify-content-center flex flex-col h-full rounded-lg">
+    <div class="card bg-sky-100 m-10 p-4 justify-content-center flex flex-col h-full rounded-lg">
       <!-- header -->
-      <div>
+      <div class="border-b-2 border-gray-400">
         <p class="text-4xl text-sky-800">
           {{ knowledgeData.title }}
         </p>
@@ -14,7 +14,8 @@
       </div>
 
       <!-- content -->
-      <div>
+      <div class="p-4">
+        <p class="text-xl my-2">文件說明：</p>
         <p class="text-xl">
           {{ knowledgeData.content }}
         </p>

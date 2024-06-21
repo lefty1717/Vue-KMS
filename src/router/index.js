@@ -5,7 +5,8 @@ import CreateKnowledgeView from "@/views/CreateKnowledgeView.vue";
 import KnowledgeBaseView from "@/views/KnowledgeBaseView.vue";
 import KnowledgeDetailVue from "@/views/DetailView.vue";
 import CatalogView from "@/views/CatalogView.vue";
-// import CreateKnowledgeView from "@/views/CreateKnowledgeView.vue";
+import RankIndView from "@/views/IndRankView.vue";
+import ForumView from "@/views/ForumView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,6 +36,16 @@ const router = createRouter({
       path: "/create-knowledge",
       name: "CreateKnowledge",
       component: CreateKnowledgeView
+    },
+    {
+      path: "/forum",
+      name: "Forum",
+      component: ForumView
+    },
+    {
+      path: "/rank/ind",
+      name: "RankInd",
+      component: RankIndView
     }
   ]
 });

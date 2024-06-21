@@ -1,37 +1,72 @@
 
 <template>
     <div class="card mx-14">
-        <DataView :value="knowledgeBaseData" paginator :rows="5">
-            <template #list="slotProps">
-                <div class="grid grid-nogutter">
-                    <div v-for="(item, index) in slotProps.items" :key="index" class="col-12">
-                      <router-link :to="`/knowledge-detail/${item.id}`">
-                      <Button class="w-full">
-                        <div class="flex flex-column w-full sm:flex-row sm:align-items-center p-4 gap-3" :class="{ 'border-top-1 surface-border': index !== 0 }">
-                            <div class="md:w-10rem relative">
-                                <img class="block xl:block mx-auto border-round w-full" :src="`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRh-iNLZ5A_dQOywQy8KwIW6c8T1HqRpxtQ38T8qtFbiA&s`" :alt="item.title" />
-                            </div>
-                            <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
-                                <div class="flex flex-column md:flex-col justify-content-between align-items-start gap-2">
-                                    <div>
-                                        <div class="text-lg font-bold text-900 mt-2 ">
-                                          {{ item.title }}
-                                        </div>
-                                        <span class="font-medium text-secondary text-sm">
-                                          {{ item.category_cn }}
-                                        </span>
-                                    </div>
-                                    <div class="">
+        <DataView 
+          class="p-4 rounded-lg border-2"
+          :value="knowledgeBaseData" 
+          paginator 
+          :rows="5"
+        >
+          <!-- header -->
+          <template #header>
+            <div class="flex justify-between border-b-2 border-gray-400 pb-4">
+              <div>
+                <p class="text-3xl">
+                  {{ identifyDeptType() }}
+                </p>
+              </div>
+              <div class="">
+                <InputText 
+                  class="border-2 p-2 border-gray-200 rounded-3xl"
+                  type="text" 
+                  v-model="search"
+                  placeholder="Search..." 
+                />
+                <!-- <i class="pi pi-search" /> -->
+              </div>
+            </div>
+          </template>
 
-                                    </div>
-                                </div>
-                            </div>
+          <!-- content -->
+          <template #list="slotProps">
+            <div class="border-b-2 border-gray-200">
+              <div 
+                v-for="(item, index) in slotProps.items" 
+                :key="index" 
+                class="border-gray-300 border-b-2 py-4"
+              >
+                <router-link :to="`/knowledge-detail/${item.id}`">
+                  <Button>
+                        <img
+                          class="border-round w-20" 
+                          :src="`https://www.iconpacks.net/icons/2/free-file-icon-1453-thumb.png`" 
+                          :alt="item.title" 
+                        />
+                        <div class="flex flex-col">
+                          <p class="flex text-xl font-bold">
+                            {{ item.title }}
+                          </p>
+                          <p class="flex">
+                            {{ item.category_cn }}
+                          </p>
+                          <p class="flex">
+                            {{ item.creator }} 於 {{ item.create_time }} 建立
+                          </p>
+                          <div class="flex flex-row">
+                            <p
+                              v-for="(tag, index) in item.tag" 
+                              :key="index"
+                              class="mx-2 text-gray-400"
+                            >
+                              #  {{ tag }}
+                            </p>
+                          </div>
                         </div>
-                      </Button>
-                      </router-link>
-                    </div>
-                </div>
-            </template>
+                  </Button>
+                </router-link>
+              </div>
+            </div>
+          </template>
         </DataView>
     </div>
 </template>
@@ -43,23 +78,28 @@ import { useRoute } from "vue-router";
 // primevue
 import DataView from "primevue/dataview";
 import Button from "primevue/button";
+import InputText from "primevue/inputtext";
 // db
 import { db } from "@/_firebase/firebase_setting";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+// tools
+import { format } from "date-fns";
+import cloneDeep from "lodash/cloneDeep";
 
 const route = useRoute();
 const knowledgeBaseData = ref([]);
 const getKnowledgeBaseData = async () => {
-  const q = query(collection(db, "KnowledgeBase"), where("category", "==", route.params.catalogName));
+  const q = query(collection(db, "KnowledgeBase"), where("category", "==", route.params.catalogName), orderBy("create_time", "desc"));
   const querySnapshot = await getDocs(q);
     
   const knowledgeBaseData = [];
   querySnapshot.forEach((doc) => {
-    const data = {
+    const cloneData = cloneDeep({
       id: doc.id,
       ...doc.data()
-    };
-    knowledgeBaseData.push(data);
+    });
+    cloneData.create_time = format(doc.data().create_time.seconds * 1000, "yyyy-MM-dd HH:mm");
+    knowledgeBaseData.push(cloneData);
   });
   return knowledgeBaseData;
 };
@@ -70,4 +110,27 @@ onMounted(async () => {
   });
   console.log("knowledgeBaseData", knowledgeBaseData.value);
 });
+
+const search = ref("");
+
+
+const identifyDeptType = () => {
+  const dept = route.params.catalogName;
+  if (dept == "HR")
+    return "人事部門";
+  else if (dept == "sales")
+    return "銷售部門";
+  else if (dept == "IT")
+    return "資訊部門";
+  else if (dept == "marketing")
+    return "行銷部門";
+  else if (dept == "R&D")
+    return "研發部門";
+  else if (dept == "finance")
+    return "財務部門";
+  else if (dept == "procurement")
+    return "採購部門";
+  else (dept == "s-other");
+  return "其他";
+};
 </script>
